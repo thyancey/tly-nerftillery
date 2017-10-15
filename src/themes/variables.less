@@ -1,0 +1,35 @@
+@font-style-heading: 'Luckiest Guy', cursive;
+@font-style-body:'Hind Vadodara', sans-serif;
+// @font-style-body:'arial';
+
+// @font-style-heading:'berlin_sans_fb_demibold';
+
+@breakpoint-mobile: 750px;
+@breakpoint-tablet: 1000px;
+
+@color-green: #51f24a;
+
+@color-blue:#1fbaf3;
+@color-blue-light:#69d1f6;
+
+
+@color-red:#f31f1f;
+
+@color-white:#fef9dc;
+@color-black:#000000;
+@color-black-light:#373737;
+
+@border-radius-large: 3rem;
+@border-radius-medium: 1rem;
+
+@border-thickness-medium: .5rem;
+
+@shadow-z2: -0.1rem 0.1rem .25rem .1rem rgba(0,0,0,0.36);
+@shadow-z3: -.2rem .5rem 1rem .2rem rgba(0,0,0,.36);
+
+.mixin-lighten(@color) {
+  color: lighten(@color, 10%);
+}
+.mixin-bglighten(@color) {
+  background-color: lighten(@color, 10%);
+}
