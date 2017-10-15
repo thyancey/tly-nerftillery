@@ -4,7 +4,9 @@ import * as actions from 'store/actions';
 
 import staticData from 'data/staticData.js';
 
-require('./main.less');
+import Header from 'components/header';
+
+require('./style.less');
 
 
 const MainContainerComponent = React.createClass({
@@ -36,6 +38,12 @@ const MainContainerComponent = React.createClass({
     
     return (
       <div className="main">
+        <Header />
+        <div className="container-map">
+          <div className="map">
+            <div className="map-image"/>
+          </div>
+        </div>
         <div className="sample-image" />
       </div>
     );
