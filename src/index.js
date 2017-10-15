@@ -14,8 +14,10 @@ import staticData from './data/staticData.js';
 const store = createStore(reducer);
 let state = {
   title: 'Nerftillery',
-  map:{
-    scale: 2,
+  mapData:{
+    origWidth: 554,
+    origHeight: 736,
+    scale: 1,
     width: 554,
     height: 736
   },

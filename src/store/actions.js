@@ -28,3 +28,27 @@ export function addTarget(payload) {
     payload
   };
 }
+
+export function setMapScale(payload) {
+  return {
+    type: 'SET_MAP_SCALE',
+    payload
+  };
+}
+
+
+export function getTargets(payload) {
+  return {
+    type: 'GET_TARGETS',
+    payload
+  };
+}
+
+
+
+export function getMapData(payload) {
+  return {
+    type: 'GET_MAP_DATA',
+    payload
+  };
+}

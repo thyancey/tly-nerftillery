@@ -21,7 +21,7 @@ const MapComponent = React.createClass({
     const offsetY = 0 - this.state.headerHeight + $('.container-map').scrollTop();
 
     this.props.addTarget({
-      title: 'buddyboy',
+      title: 'new target',
       x: x + offsetX,
       y: y + offsetY
     });
@@ -33,34 +33,46 @@ const MapComponent = React.createClass({
     });
   },
 
-  getMapStyle(){
+  //- for debugging for now
+  setMapScale(scaleValue){
+    this.props.setMapScale(scaleValue);
+  },
+
+  getSizing(){
     return {
-      width: this.props.mapScaledWidth,
-      height: this.props.mapScaledHeight
+      width: this.props.mapWidth,
+      height: this.props.mapHeight
     }
   },
 
   renderTarget(tData, idx){
     return(
-      <div key={'t-' + idx} className="target" style={{left:tData.x, top:tData.y}}>
+      <div key={'t-' + idx} className="target" style={{left:tData.get('x'), top:tData.get('y')}}>
         <div className="target-bg"/>
       </div>
-    )
+    );
   },
 
   render() {
     global.testo = this;
-    
-    return (
-      <div className="map" onClick={this.onMapClick} style={this.getMapStyle()}>
-        <div className="container-targets" style={this.getMapStyle()}>
-          {this.props.targets.map((t, idx) => (
-            this.renderTarget(t, idx)
-          ))}
+    if(this.props.mapImage){
+      return (
+        <div className="map" onClick={this.onMapClick} style={this.getSizing()}>
+          <div className="container-targets" style={this.getSizing()}>
+            {this.props.targets.map((t, idx) => (
+              this.renderTarget(t, idx)
+            ))}
+          </div>
+          <div className="map-image" style={{backgroundImage: 'url("' + this.props.mapImage + '")'}}/>
         </div>
-        <div className="map-image"/>
-      </div>
-    );
+      );
+    }else{
+      return (
+        <div>
+          <h1>{'Map loading'}</h1>
+        </div>
+      );
+    }
   }
 });
 
@@ -68,11 +80,11 @@ function mapStateToProps(state) {
   global.store = state;
   return {
     targets: state.get('targets'),
-    mapScale: state.get('map').get('scale'),
-    mapWidth: state.get('map').get('width'),
-    mapHeight: state.get('map').get('height'),
-    mapScaledWidth: state.get('map').get('width') * state.get('map').get('scale'),
-    mapScaledHeight: state.get('map').get('height') * state.get('map').get('scale')
+    mapScale: state.get('mapData').get('scale'),
+    mapWidth: state.get('mapData').get('width'),
+    mapHeight: state.get('mapData').get('height'),
+    mapImage: state.get('mapData').get('image'),
+    mapTitle: state.get('mapData').get('title')
   };
 }
 

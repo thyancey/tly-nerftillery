@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as actions from 'store/actions';
+import {fromJS, Map, List} from 'immutable';
 
 import staticData from 'data/staticData.js';
 
@@ -13,14 +14,20 @@ require('./style.less');
 const MainContainerComponent = React.createClass({
   componentDidMount(){
     this.addListeners();
+
+    this.getMapData();
   },
 
-
-  componentDidUpdate(prevProps, prevState){
+  getMapData(){
+    this.props.getMapData({
+      allMapData: fromJS(staticData.maps),
+      defaultId: staticData.defaultId
+    });
   },
 
   addListeners(){
     const instance = this;
+
     window.addEventListener('scroll', function(){
       instance.checkScrollStuff();
     })
@@ -35,7 +42,7 @@ const MainContainerComponent = React.createClass({
 
   render() {
     console.log('Main.render()')
-    global.data = staticData;
+    global.staticData = staticData;
     
     return (
       <div className="main">
@@ -43,7 +50,6 @@ const MainContainerComponent = React.createClass({
         <div className="container-map">
           <MapController />
         </div>
-        <div className="sample-image" />
       </div>
     );
   }
