@@ -1,0 +1,39 @@
+@import "~themes/variables.less";
+
+.map{
+  // width:554px;
+  // height:736px;
+
+  // width:1662px;
+  // height:2208px;
+
+  .map-image{
+    background-image: url('~images/map.jpg');
+    width:100%;
+    height:100%;
+    background-size: 100% 100%;
+  }
+
+  .container-targets{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
+
+  .target{
+    position:absolute;
+    width:150px;
+    height:150px;
+
+    .target-bg{
+      position:absolute;
+      left:-50%;
+      top:-50%;
+      height:100%;
+      width:100%;
+      background-image: url('~images/target.png');
+      background-size:contain;
+    }
+  }
+}

@@ -20,3 +20,11 @@ export function setItems(payload) {
     payload
   };
 }
+
+
+export function addTarget(payload) {
+  return {
+    type: 'ADD_TARGET',
+    payload
+  };
+}
