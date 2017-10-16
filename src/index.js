@@ -16,7 +16,6 @@ let state = {
   title: 'Nerftillery',
   mapData:{}
 };
-  
 store.dispatch(setState(state));
 
 ReactDOM.render(

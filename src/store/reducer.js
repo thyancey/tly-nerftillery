@@ -48,12 +48,15 @@ function getMapData(state, action){
   }
 
   const scale = foundMap.get('data').get('scale') || 1;
+
+  //- do any scaling and mutate saved format into a more usable flat object
   const mapData = refreshMapData(foundMap.get('data'), scale).merge({
     id: foundMap.get('id'),
     title: foundMap.get('title'),
     image: foundMap.get('image')
   });
-  console.log("mapData", mapData.toJS())
+
+  //- get updated scaled position for all locaiton markers
   const locations = refreshLocations(mapData, foundMap.get('locations'));
 
   return state.withMutations((ctx) => {
@@ -72,7 +75,7 @@ function getLocations(state, action){
   });
 }
 
-
+//- action.payload is an x/y coordinate based on real position on the current map image
 function addLocation(state, action){
   // log('addLocation', action.payload, 'reducer');
 
