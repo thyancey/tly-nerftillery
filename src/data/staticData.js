@@ -8,7 +8,7 @@ export default {
       data:{
         origWidth: 554,
         origHeight: 736,
-        scale: 1.5
+        scale: 3
       },
       locations:[
         {
@@ -60,7 +60,6 @@ export default {
         },
         {
           title: 'Pirate shit',
-          description: 'Easy to hit from turret2',
           type: 'location',
           percX: 0.7971,
           percY: 0.5862,

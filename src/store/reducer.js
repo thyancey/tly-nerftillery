@@ -31,6 +31,11 @@ export default function(state = Map({ title: '' }), action) {
       console.log('reducer.UPDATE_LOCATION');
       return updateLocation(state, action);
 
+    case 'LOAD_LOCATION_SETTINGS':
+      console.log('reducer.LOAD_LOCATION_SETTINGS');
+      return loadLocationSettings(state, action);
+
+
     default: return state;
   }
 }
@@ -130,7 +135,7 @@ function setMapScale(state, action){
 }
 
 function updateLocation(state, action){
-  const location = state.get('locations').filter((loc, idx) => idx === action.payload.id).first();
+  const location = getLocationWithId(state.get('locations'), action.payload.id);
 
   if(location){
     const mapData = state.get('mapData');
@@ -146,6 +151,22 @@ function updateLocation(state, action){
   }else{
     return state;
   }
+}
+
+function loadLocationSettings(state, action){
+  const location = getLocationWithId(state.get('locations'), action.payload);
+
+  return state.withMutations((ctx) => {
+    ctx.set('curLocation', location);
+  });
+}
+
+function getLocationWithId(locations, id){
+  const location = locations.filter((loc, idx) => idx === id).first();
+  if(!location){
+    console.warn('could not find location with id ' + id);
+  }
+  return location;
 }
 
 function refreshMapData(mapData, scale){

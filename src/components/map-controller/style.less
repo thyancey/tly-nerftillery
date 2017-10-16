@@ -13,80 +13,97 @@
     height:100%;
     overflow:hidden;
   }
+}
 
-  .target{
-    cursor: pointer;
+.target{
+  cursor: pointer;
+  position:absolute;
+  width:8rem;
+  height:8rem;
+
+  .target-bg{
     position:absolute;
-    width:8rem;
-    height:8rem;
+    left:-50%;
+    top:-50%;
+    height:100%;
+    width:100%;
+    background-image: url('~images/target-green.png');
+    background-size:contain;
+  }
 
-    .target-bg{
-      position:absolute;
-      left:-50%;
-      top:-50%;
-      height:100%;
-      width:100%;
-      background-image: url('~images/target-green.png');
-      background-size:contain;
-    }
-
-    &.type-turret{
-      .location-info{
-        background-color: @color-red;
-      }
-      .target-bg{
-        background-image: url('~images/target-red.png');
-      }
-    }
-    &.type-location{
-      .location-info{
-        background-color: @color-blue-light;
-      }
-      .target-bg{
-        background-image: url('~images/target-blue.png');
-      }
-    }
-
+  &.type-turret{
     .location-info{
-      opacity: 0;
+      background-color: @color-red;
+    }
+    .target-bg{
+      background-image: url('~images/target-red.png');
+    }
+  }
+  &.type-location{
+    .location-info{
+      background-color: @color-blue-light;
+    }
+    .target-bg{
+      background-image: url('~images/target-blue.png');
+    }
+  }
+
+
+  .location-info{
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+
+    position: absolute;
+
+    z-index: 1000;
+    background-color: white;
+    border-radius: @border-radius-medium;
+    padding: 1rem;
+    box-shadow: @shadow-z2;
+    min-width: 20rem;
+    pointer-events: none;
+  }
+
+  .location-info-header{
+    .left{
+      width:100%;
+      padding-right:2.5rem;
+    }
+    .right{
+      position:absolute;
+      top:1rem;
+      right:1rem;
+      width:2rem;
+      height:2rem;
+      background-size:contain;
+      background-image: url('~images/settings-gear.png');
+    }
+  }
+
+  &.open{
+    .location-info{
+      opacity:1;
       transition: opacity .2s ease-in-out;
-
-      position: absolute;
-
-      z-index: 1000;
-      background-color: white;
-      border-radius: @border-radius-medium;
-      padding: 1rem;
-      box-shadow: @shadow-z2;
-      min-width: 20rem;
-      pointer-events: none;
+      pointer-events:all;
     }
+  }
 
-    &.open{
-      .location-info{
-        opacity:1;
-        transition: opacity .2s ease-in-out;
-        pointer-events:all;
+  .calibration-group{
+    background-color:@color-blue;
+    border-radius: @border-radius-medium;
+    padding: 1rem;
+    margin-top:1rem;
+
+    >div{
+      margin-top:.5rem;
+
+      ul{
+        font-size:1.2rem;
+        margin:0;
+        list-style:none;
+        padding-left:1rem;
       }
     }
 
-    .calibration-group{
-      background-color:@color-blue;
-      border-radius: @border-radius-medium;
-      padding: 1rem;
-      margin-top:1rem;
-
-      >div{
-        margin-top:.5rem;
-
-        ul{
-          font-size:1.2rem;
-          margin:0;
-          list-style:none;
-          padding-left:1rem;
-        }
-      }
-
-    }
   }
 }

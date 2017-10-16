@@ -7,6 +7,7 @@ import staticData from 'data/staticData.js';
 
 import Header from 'components/header';
 import MapController from 'components/map-controller';
+import LocationSettings from 'components/location-settings';
 
 require('./style.less');
 
@@ -23,6 +24,10 @@ const MainContainerComponent = React.createClass({
       allMapData: fromJS(staticData.maps),
       defaultId: staticData.defaultId
     });
+  },
+
+  onCloseLocation(){
+    this.props.loadLocationSettings(null);
   },
 
   addListeners(){
@@ -44,6 +49,9 @@ const MainContainerComponent = React.createClass({
     return (
       <div className="main">
         <Header />
+        {this.props.curLocation && (
+          <LocationSettings location={this.props.curLocation} onCloseLocation={this.onCloseLocation}/>
+        )}
         <div className="container-map">
           <MapController />
         </div>
@@ -55,6 +63,7 @@ const MainContainerComponent = React.createClass({
 function mapStateToProps(state) {
   global.store = state;
   return {
+    curLocation: state.get('curLocation')
   };
 }
 

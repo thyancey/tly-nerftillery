@@ -14,24 +14,28 @@ const MapComponent = React.createClass({
   },
 
   onMapTouchStart(e){
-    console.log('touch start')
+    console.log('onMapTouchStart');
     const touch = e.touches[0];
     this.startHoldTimer(touch.pageX, touch.pageY);
   },
 
   onMapTouchEnd(e){
+    // console.log('onMapTouchEnd');
     this.killHoldTimer();
   },
 
   onMapMouseDown(e){
+    // console.log('onMapMouseDown');
     this.startHoldTimer(e.clientX, e.clientY);
   },
 
   onMapMouseUp(e){
+    // console.log('onMapMouseUp');
     this.killHoldTimer();
   },
 
   killHoldTimer(){
+    // console.log('killHoldTimer');
     if(this.holdTimer){
       global.clearTimeout(this.holdTimer);
     }
@@ -39,6 +43,7 @@ const MapComponent = React.createClass({
   },
 
   startHoldTimer(x, y){
+    // console.log('startHoldTimer');
     this.killHoldTimer();
 
     this.holdTimer = global.setTimeout(() => {
@@ -47,6 +52,12 @@ const MapComponent = React.createClass({
     }, 500);
   },
 
+
+  onLocationSettings(id){
+    // console.log('kill hold timer');
+    this.killHoldTimer();
+    this.props.loadLocationSettings(id);
+  },
 
   updateLocation(id, x, y){
     // console.log('updateLocation (' + id + ', ' + x + ', ' + y + ')');
@@ -62,7 +73,7 @@ const MapComponent = React.createClass({
   },
 
   addLocation(x, y){
-    // console.log('click (' + x + ', ' + y + ')')
+    console.log('click (' + x + ', ' + y + ')')
     const offsetX = $('.container-map').scrollLeft();
     const offsetY = 0 - this.state.headerHeight + $('.container-map').scrollTop();
 
@@ -84,10 +95,11 @@ const MapComponent = React.createClass({
     this.props.setMapScale(scaleValue);
   },
 
-  getSizing(){
+  getSizing(multiplier){
+    multiplier = multiplier || 1;
     return {
-      width: this.props.mapWidth,
-      height: this.props.mapHeight
+      width: this.props.mapWidth * multiplier,
+      height: this.props.mapHeight * multiplier
     }
   },
 
@@ -103,7 +115,7 @@ const MapComponent = React.createClass({
               style={this.getSizing()}>
           <div className="container-locations" style={this.getSizing()}>
             {this.props.locations.map((l, idx) => (
-              <Location key={idx} id={idx} locationData={l} updateLocation={(id, x, y) => this.updateLocation(id, x, y)}/> 
+              <Location key={idx} id={idx} locationData={l} updateLocation={(id, x, y) => this.updateLocation(id, x, y)} onLocationSettings={this.onLocationSettings} /> 
             ))}
           </div>
           <div className="map-image" style={{backgroundImage: 'url("' + this.props.mapImage + '")'}}/>

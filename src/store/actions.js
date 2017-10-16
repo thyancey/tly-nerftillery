@@ -59,3 +59,10 @@ export function updateLocation(payload) {
     payload
   };
 }
+
+export function loadLocationSettings(payload){
+  return{
+    type: 'LOAD_LOCATION_SETTINGS',
+    payload
+  }
+}

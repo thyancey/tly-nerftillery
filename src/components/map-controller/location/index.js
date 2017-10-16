@@ -22,7 +22,14 @@ export default Location = React.createClass({
 
   mouseLeave(){
     // console.log('mouseLeave');
-    this.setState({ isOpen: false, isDragging: false });
+    this.setState({ isOpen: false });
+  },
+
+  onSettings(e, id){
+    e.stopPropagation();
+    this.setState({ isOpen:false });
+
+    this.props.onLocationSettings(id);
   },
 
   renderCalibration(calibrationData){
@@ -69,7 +76,12 @@ export default Location = React.createClass({
             style={{left:this.props.locationData.get('x'), top:this.props.locationData.get('y')}} >
         {this.state.isOpen && (
           <div className="location-info">
-            <h3>{this.props.locationData.get('title')}</h3>
+            <div className="location-info-header">
+              <h3 className="left">{this.props.locationData.get('title')}</h3>
+              <div  className="right" 
+                    onMouseDown={e => this.onSettings(e, this.props.id)} 
+                    onTouchStart={e => this.onSettings(e, this.props.id)}/>
+            </div>
             {this.props.locationData.get('description') && (<p>{this.props.locationData.get('description')}</p>)}
             {this.renderCalibration(this.props.locationData.get('calibration'))}
           </div>
