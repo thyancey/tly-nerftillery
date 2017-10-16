@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as actions from 'store/actions';
 
+import Location from './location';
+
 require('./style.less');
 
 const MapComponent = React.createClass({
@@ -45,14 +47,6 @@ const MapComponent = React.createClass({
     }
   },
 
-  renderLocation(lData, idx){
-    return(
-      <div key={'t-' + idx} className="target" style={{left:lData.get('x'), top:lData.get('y')}}>
-        <div className="target-bg"/>
-      </div>
-    );
-  },
-
   render() {
     global.testo = this;
     if(this.props.mapImage){
@@ -60,7 +54,7 @@ const MapComponent = React.createClass({
         <div className="map" onClick={this.onMapClick} style={this.getSizing()}>
           <div className="container-locations" style={this.getSizing()}>
             {this.props.locations.map((l, idx) => (
-              this.renderLocation(l, idx)
+              <Location key={idx} locationData={l}/> 
             ))}
           </div>
           <div className="map-image" style={{backgroundImage: 'url("' + this.props.mapImage + '")'}}/>

@@ -28,5 +28,27 @@
       background-image: url('~images/target.png');
       background-size:contain;
     }
+
+
+    .location-info{
+      opacity:0;
+      transition: opacity .2s ease-in-out;
+
+      position:absolute;
+      z-index:1;
+      background-color:white;
+      border-radius: @border-radius-large;
+      padding: 2rem;
+      box-shadow: @shadow-z2;
+      width:25rem;
+
+    }
+
+    &.open{
+      .location-info{
+        opacity:1;
+        transition: opacity .2s ease-in-out;
+      }
+    }
   }
 }
