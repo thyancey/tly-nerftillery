@@ -40,7 +40,7 @@ export default {
       data:{
         origWidth: 1000,
         origHeight: 1400,
-        scale: 2
+        scale: .75
       },
       locations: [
         {

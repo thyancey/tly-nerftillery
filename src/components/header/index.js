@@ -9,9 +9,12 @@ export default React.createClass({
     return (
       <div id="header">
         <div className="menu-btn">
-          <a title="menu"></a>
+          <a title="menu" />
+          <img/>
         </div>
-        <div className="logo"/>
+        <div className="logo">
+          <img/>
+        </div>
       </div>
     );
   }

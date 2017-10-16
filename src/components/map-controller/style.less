@@ -15,9 +15,10 @@
   }
 
   .target{
+    cursor: pointer;
     position:absolute;
-    width:150px;
-    height:150px;
+    width:5rem;
+    height:5rem;
 
     .target-bg{
       position:absolute;
@@ -35,19 +36,21 @@
       transition: opacity .2s ease-in-out;
 
       position:absolute;
+
       z-index:1;
       background-color:white;
-      border-radius: @border-radius-large;
-      padding: 2rem;
+      border-radius: @border-radius-medium;
+      padding: 1rem;
       box-shadow: @shadow-z2;
-      width:25rem;
-
+      min-width:15rem;
+      pointer-events:none;
     }
 
     &.open{
       .location-info{
         opacity:1;
         transition: opacity .2s ease-in-out;
+        pointer-events:all;
       }
     }
   }
