@@ -10,7 +10,7 @@ export default {
         origHeight: 736,
         scale: 2
       },
-      targets:[
+      locations:[
         {
           title: 'cyclone',
           percX: 0.17,
@@ -42,7 +42,7 @@ export default {
         origHeight: 1400,
         scale: 2
       },
-      targets: [
+      locations: [
         {
           "title": "turret",
           "percX": 0.5,
@@ -74,18 +74,6 @@ export default {
           "percY": 0.27
         }
       ]
-    }
-  ],
-  targets:[
-    {
-      title: 'cyclone',
-      percX: 0.17,
-      percY: 0.11
-    },
-    {
-      title: 'compass',
-      percX: 0.75,
-      percY: 0.84
     }
   ]
 };

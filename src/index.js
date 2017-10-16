@@ -14,15 +14,7 @@ import staticData from './data/staticData.js';
 const store = createStore(reducer);
 let state = {
   title: 'Nerftillery',
-  mapData:{
-    origWidth: 554,
-    origHeight: 736,
-    scale: 1,
-    width: 554,
-    height: 736
-  },
-  items: [],
-  targets: []
+  mapData:{}
 };
   
 store.dispatch(setState(state));

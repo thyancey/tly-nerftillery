@@ -7,25 +7,18 @@ export default function(state = Map({ title: '' }), action) {
     case 'SET_STATE':
       console.log('reducer.SET_STATE');
       return state.merge(action.state);
-    case 'SET_TITLE':
-      console.log('reducer.SET_TITLE');
-      return state.set('title', action.payload);
-
-    case 'SET_ITEMS':
-      console.log('reducer.SET_ITEMS');
-      return setItems(state, action);
 
     case 'GET_MAP_DATA':
       console.log('reducer.GET_MAP_DATA');
       return getMapData(state, action);
 
-    case 'GET_TARGETS':
-      console.log('reducer.GET_TARGETS');
-      return getTargets(state, action);
+    case 'GET_LOCATIONS':
+      console.log('reducer.GET_LOCATIONS');
+      return getLocations(state, action);
 
-    case 'ADD_TARGET':
-      console.log('reducer.ADD_TARGET');
-      return addTarget(state, action);
+    case 'ADD_LOCATION':
+      console.log('reducer.ADD_LOCATION');
+      return addLocation(state, action);
 
     case 'SET_MAP_SCALE':
       console.log('reducer.SET_MAP_SCALE');
@@ -35,24 +28,12 @@ export default function(state = Map({ title: '' }), action) {
   }
 }
 
-function setItems(state, action){
-  // log('setItems', state.get('items'), 'reducer');
-
-  const items = {
-    test1: 'target 1',
-    test2: 'target 2'
-  }
-
-  return state.withMutations((ctx) => {
-    ctx.set('items', items);
-  });
-}
 
 /*
 eventaully will be fired from database info, 
 expects action.payload to be 
 {
-  allMapData: a List of Maps containing map and target information
+  allMapData: a List of Maps containing map and location information
   defaultId: key to retrieve for the default map to display
 }
 */
@@ -73,36 +54,36 @@ function getMapData(state, action){
     image: foundMap.get('image')
   });
   console.log("mapData", mapData.toJS())
-  const targets = refreshTargets(mapData, foundMap.get('targets'));
+  const locations = refreshLocations(mapData, foundMap.get('locations'));
 
   return state.withMutations((ctx) => {
-    ctx.set('mapData', mapData).set('allMapData', allMapData).set('targets', targets);
+    ctx.set('mapData', mapData).set('allMapData', allMapData).set('locations', locations);
   });
 }
 
 //- not used ATM
-//- expects a List of target data Maps (should have title, percX and percY)
-function getTargets(state, action){
-  console.log('getTargets', action.payload)
-  const targets = refreshTargets(state.get('mapData'), action.payload)
+//- expects a List of location data Maps (should have title, percX and percY)
+function getLocations(state, action){
+  console.log('getLocations', action.payload)
+  const locations = refreshLocations(state.get('mapData'), action.payload)
 
   return state.withMutations((ctx) => {
-    ctx.set('targets', targets);
+    ctx.set('locations', locations);
   });
 }
 
 
-function addTarget(state, action){
-  // log('addTarget', action.payload, 'reducer');
+function addLocation(state, action){
+  // log('addLocation', action.payload, 'reducer');
 
-  const targets = state.get('targets') || new List();
+  const locations = state.get('locations') || new List();
 
   const mapData = state.get('mapData');
   const percX = roundTo((action.payload.x / (mapData.get('origWidth') * mapData.get('scale'))), 2);
   const percY = roundTo((action.payload.y / (mapData.get('origHeight') * mapData.get('scale'))), 2);
 
   return state.withMutations((ctx) => {
-    ctx.set('targets', targets.push(new Map({
+    ctx.set('locations', locations.push(new Map({
       title: action.payload.title,
       percX: percX,
       percY: percY,
@@ -120,10 +101,10 @@ function setMapScale(state, action){
 
   const newMapData = refreshMapData(mapData, scale);
 
-  const targets = refreshTargets(newMapData, state.get('targets'));
+  const locations = refreshLocations(newMapData, state.get('locations'));
 
   return state.withMutations((ctx) => {
-    ctx.set('mapData', newData).set('targets', targets);
+    ctx.set('mapData', newData).set('locations', locations);
   });
 }
 
@@ -135,12 +116,12 @@ function refreshMapData(mapData, scale){
   });
 }
 
-function refreshTargets(mapData, targets){
-  return targets.map((target, idx) => {
+function refreshLocations(mapData, locations){
+  return locations.map((location, idx) => {
     return (
-      target.merge({
-        x: (target.get('percX') || 0) * mapData.get('width'),
-        y: (target.get('percY') || 0) * mapData.get('height')
+      location.merge({
+        x: (location.get('percX') || 0) * mapData.get('width'),
+        y: (location.get('percY') || 0) * mapData.get('height')
       })
     )
   });

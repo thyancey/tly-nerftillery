@@ -22,9 +22,9 @@ export function setItems(payload) {
 }
 
 
-export function addTarget(payload) {
+export function addLocation(payload) {
   return {
-    type: 'ADD_TARGET',
+    type: 'ADD_LOCATION',
     payload
   };
 }
@@ -37,9 +37,9 @@ export function setMapScale(payload) {
 }
 
 
-export function getTargets(payload) {
+export function getLocations(payload) {
   return {
-    type: 'GET_TARGETS',
+    type: 'GET_LOCATIONS',
     payload
   };
 }

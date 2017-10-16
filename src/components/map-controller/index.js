@@ -12,16 +12,16 @@ const MapComponent = React.createClass({
   },
 
   onMapClick(e){
-    this.addTarget(e.clientX, e.clientY);
+    this.addLocation(e.clientX, e.clientY);
   },
 
-  addTarget(x, y){
+  addLocation(x, y){
     console.log('click (' + x + ', ' + y + ')')
     const offsetX = $('.container-map').scrollLeft();
     const offsetY = 0 - this.state.headerHeight + $('.container-map').scrollTop();
 
-    this.props.addTarget({
-      title: 'new target',
+    this.props.addLocation({
+      title: 'new location',
       x: x + offsetX,
       y: y + offsetY
     });
@@ -45,9 +45,9 @@ const MapComponent = React.createClass({
     }
   },
 
-  renderTarget(tData, idx){
+  renderLocation(lData, idx){
     return(
-      <div key={'t-' + idx} className="target" style={{left:tData.get('x'), top:tData.get('y')}}>
+      <div key={'t-' + idx} className="target" style={{left:lData.get('x'), top:lData.get('y')}}>
         <div className="target-bg"/>
       </div>
     );
@@ -58,9 +58,9 @@ const MapComponent = React.createClass({
     if(this.props.mapImage){
       return (
         <div className="map" onClick={this.onMapClick} style={this.getSizing()}>
-          <div className="container-targets" style={this.getSizing()}>
-            {this.props.targets.map((t, idx) => (
-              this.renderTarget(t, idx)
+          <div className="container-locations" style={this.getSizing()}>
+            {this.props.locations.map((l, idx) => (
+              this.renderLocation(l, idx)
             ))}
           </div>
           <div className="map-image" style={{backgroundImage: 'url("' + this.props.mapImage + '")'}}/>
@@ -79,7 +79,7 @@ const MapComponent = React.createClass({
 function mapStateToProps(state) {
   global.store = state;
   return {
-    targets: state.get('targets'),
+    locations: state.get('locations'),
     mapScale: state.get('mapData').get('scale'),
     mapWidth: state.get('mapData').get('width'),
     mapHeight: state.get('mapData').get('height'),

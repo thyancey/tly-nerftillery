@@ -58,8 +58,6 @@ const MainContainerComponent = React.createClass({
 function mapStateToProps(state) {
   global.store = state;
   return {
-    title: state.get('title'),
-    items: state.get('items')
   };
 }
 
