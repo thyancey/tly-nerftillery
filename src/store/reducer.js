@@ -105,6 +105,7 @@ function addLocation(state, action){
   return state.withMutations((ctx) => {
     ctx.set('locations', locations.push(new Map({
       title: action.payload.title,
+      description: action.payload.description,
       percX: percX,
       percY: percY,
       x: action.payload.x,

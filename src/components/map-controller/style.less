@@ -17,8 +17,8 @@
   .target{
     cursor: pointer;
     position:absolute;
-    width:5rem;
-    height:5rem;
+    width:8rem;
+    height:8rem;
 
     .target-bg{
       position:absolute;
@@ -26,24 +26,40 @@
       top:-50%;
       height:100%;
       width:100%;
-      background-image: url('~images/target.png');
+      background-image: url('~images/target-green.png');
       background-size:contain;
     }
 
+    &.type-turret{
+      .location-info{
+        background-color: @color-red;
+      }
+      .target-bg{
+        background-image: url('~images/target-red.png');
+      }
+    }
+    &.type-location{
+      .location-info{
+        background-color: @color-blue-light;
+      }
+      .target-bg{
+        background-image: url('~images/target-blue.png');
+      }
+    }
 
     .location-info{
-      opacity:0;
+      opacity: 0;
       transition: opacity .2s ease-in-out;
 
-      position:absolute;
+      position: absolute;
 
-      z-index:1;
-      background-color:white;
+      z-index: 1000;
+      background-color: white;
       border-radius: @border-radius-medium;
       padding: 1rem;
       box-shadow: @shadow-z2;
-      min-width:15rem;
-      pointer-events:none;
+      min-width: 20rem;
+      pointer-events: none;
     }
 
     &.open{
@@ -52,6 +68,25 @@
         transition: opacity .2s ease-in-out;
         pointer-events:all;
       }
+    }
+
+    .calibration-group{
+      background-color:@color-blue;
+      border-radius: @border-radius-medium;
+      padding: 1rem;
+      margin-top:1rem;
+
+      >div{
+        margin-top:.5rem;
+
+        ul{
+          font-size:1.2rem;
+          margin:0;
+          list-style:none;
+          padding-left:1rem;
+        }
+      }
+
     }
   }
 }

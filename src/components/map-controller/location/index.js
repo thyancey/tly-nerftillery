@@ -14,64 +14,59 @@ export default Location = React.createClass({
     e.stopPropagation();
   },
 
-  mouseDown(){
-    this.startDragTimer();
-  },
-
-  mouseMove(e){
-    if(this.state.isDragging){
-      this.props.updateLocation(this.props.id, e.clientX, e.clientY);
-    }
-  },
-
-  mouseUp(){
-    this.killDragTimer();
-    this.setState({ isDragging: false });
-  },
-
   mouseEnter(){
     this.setState({ isOpen: true });
   },
 
   mouseLeave(){
-    this.killDragTimer();
     this.setState({ isOpen: false, isDragging: false });
   },
 
-  startDragTimer(){
-    this.killDragTimer();
+  renderCalibration(calibrationData){
+    if(calibrationData){
+      const turretMarkup = [];
+      calibrationData.keySeq().forEach((turretId, idx) => {
+        turretMarkup.push(
+          <div key={idx}>
+            <p>{turretId}</p>
+            <ul>
+              <li>{'rotX: ' + calibrationData.get(turretId).get('rotX') + '°'}</li>
+              <li>{'rotY: ' + calibrationData.get(turretId).get('rotY') + '°'}</li>
+            </ul>
+          </div>
+        );
+      });
 
-    this.dragTimer = global.setTimeout(t => {
-      this.startDragging();
-    }, 200);
-  },
-
-  killDragTimer(){
-    if(this.dragTimer){
-      global.clearTimeout(this.dragTimer);
-      this.dragTimer = null;
+      if(turretMarkup.length > 0){
+        return(
+          <div className="calibration-group">
+            <h4>{'Calibration:'}</h4>
+            {turretMarkup}
+          </div>
+        );
+      }else{
+        return null;
+      }
+    }else{
+      return null;
     }
-  },
-
-  startDragging(){
-    this.setState({'isDragging': true, 'isOpen': false});
   },
 
   render() {
     let className = 'target';
     if(this.state.isOpen) className += ' open';
+    if(this.props.locationData.get('type')) className += ' type-' + this.props.locationData.get('type');
 
     return (
-      <div className={className} style={{left:this.props.locationData.get('x'), top:this.props.locationData.get('y')}} 
-      onClick={this.onLocationClick} 
-      onMouseEnter={this.mouseEnter} 
-      onMouseLeave={this.mouseLeave}
-      onMouseMove={this.mouseMove}
-      onMouseDown={this.mouseDown}
-      onMouseUp={this.mouseUp}>
+      <div  className={className} 
+            onClick={this.onLocationClick} 
+            onMouseEnter={this.mouseEnter} 
+            onMouseLeave={this.mouseLeave}
+            style={{left:this.props.locationData.get('x'), top:this.props.locationData.get('y')}} >
         <div className="location-info">
           <h3>{this.props.locationData.get('title')}</h3>
-          <p>{this.props.locationData.get('description') || 'no description'}</p>
+          {this.props.locationData.get('description') && (<p>{this.props.locationData.get('description')}</p>)}
+          {this.renderCalibration(this.props.locationData.get('calibration'))}
         </div>
         <div className="target-bg"/>
       </div>
