@@ -52,3 +52,10 @@ export function getMapData(payload) {
     payload
   };
 }
+
+export function updateLocation(payload) {
+  return {
+    type: 'UPDATE_LOCATION',
+    payload
+  };
+}

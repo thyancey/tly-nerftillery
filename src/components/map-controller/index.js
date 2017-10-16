@@ -17,8 +17,21 @@ const MapComponent = React.createClass({
     this.addLocation(e.clientX, e.clientY);
   },
 
+  updateLocation(id, x, y){
+    // console.log('updateLocation (' + id + ', ' + x + ', ' + y + ')');
+
+    const offsetX = $('.container-map').scrollLeft();
+    const offsetY = 0 - this.state.headerHeight + $('.container-map').scrollTop();
+
+    this.props.updateLocation({
+      id: id,
+      x: x + offsetX,
+      y: y + offsetY
+    });
+  },
+
   addLocation(x, y){
-    console.log('click (' + x + ', ' + y + ')')
+    // console.log('click (' + x + ', ' + y + ')')
     const offsetX = $('.container-map').scrollLeft();
     const offsetY = 0 - this.state.headerHeight + $('.container-map').scrollTop();
 
@@ -54,7 +67,7 @@ const MapComponent = React.createClass({
         <div className="map" onClick={this.onMapClick} style={this.getSizing()}>
           <div className="container-locations" style={this.getSizing()}>
             {this.props.locations.map((l, idx) => (
-              <Location key={idx} locationData={l}/> 
+              <Location key={idx} id={idx} locationData={l} updateLocation={(id, x, y) => this.updateLocation(id, x, y)}/> 
             ))}
           </div>
           <div className="map-image" style={{backgroundImage: 'url("' + this.props.mapImage + '")'}}/>

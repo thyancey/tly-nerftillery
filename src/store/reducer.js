@@ -2,6 +2,9 @@ import {Map, List} from 'immutable';
 import log from 'util/logger.js';
 import roundTo from 'util/round-to';
 
+
+const SNAP_SENSITIVITY = 4; //- how many decimals for x/y percentages to keep
+
 export default function(state = Map({ title: '' }), action) {
   switch (action.type) {
     case 'SET_STATE':
@@ -23,6 +26,10 @@ export default function(state = Map({ title: '' }), action) {
     case 'SET_MAP_SCALE':
       console.log('reducer.SET_MAP_SCALE');
       return setMapScale(state, action);
+
+    case 'UPDATE_LOCATION':
+      console.log('reducer.UPDATE_LOCATION');
+      return updateLocation(state, action);
 
     default: return state;
   }
@@ -75,6 +82,16 @@ function getLocations(state, action){
   });
 }
 
+
+
+function getLocationX(orig, mapData){
+  return roundTo((orig / (mapData.get('origWidth') * mapData.get('scale'))), SNAP_SENSITIVITY);
+}
+
+function getLocationY(orig, mapData){
+  return roundTo((orig / (mapData.get('origHeight') * mapData.get('scale'))), SNAP_SENSITIVITY);
+}
+
 //- action.payload is an x/y coordinate based on real position on the current map image
 function addLocation(state, action){
   // log('addLocation', action.payload, 'reducer');
@@ -82,8 +99,8 @@ function addLocation(state, action){
   const locations = state.get('locations') || new List();
 
   const mapData = state.get('mapData');
-  const percX = roundTo((action.payload.x / (mapData.get('origWidth') * mapData.get('scale'))), 2);
-  const percY = roundTo((action.payload.y / (mapData.get('origHeight') * mapData.get('scale'))), 2);
+  const percX = getLocationX(action.payload.x, mapData);
+  const percY = getLocationY(action.payload.y, mapData);
 
   return state.withMutations((ctx) => {
     ctx.set('locations', locations.push(new Map({
@@ -111,6 +128,25 @@ function setMapScale(state, action){
   });
 }
 
+function updateLocation(state, action){
+  const location = state.get('locations').filter((loc, idx) => idx === action.payload.id).first();
+
+  if(location){
+    const mapData = state.get('mapData');
+    const fixedLocation = refreshLocation(mapData, location.merge({
+      percX: getLocationX(action.payload.x, mapData),
+      percY: getLocationY(action.payload.y, mapData)
+    }));
+    const locations = state.get('locations').set(action.payload.id, fixedLocation);
+
+    return state.withMutations((ctx) => {
+      ctx.set('locations', locations);
+    });
+  }else{
+    return state;
+  }
+}
+
 function refreshMapData(mapData, scale){
   return mapData.merge({
     scale: scale,
@@ -128,4 +164,13 @@ function refreshLocations(mapData, locations){
       })
     )
   });
+}
+
+function refreshLocation(mapData, location){
+  return (
+    location.merge({
+      x: (location.get('percX') || 0) * mapData.get('width'),
+      y: (location.get('percY') || 0) * mapData.get('height')
+    })
+  );
 }

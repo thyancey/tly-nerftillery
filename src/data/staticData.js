@@ -1,5 +1,5 @@
 export default {
-  defaultId: 'office',
+  defaultId: 'pirate',
   maps:[
     {
       id: 'pirate',
