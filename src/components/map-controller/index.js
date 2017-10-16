@@ -13,9 +13,40 @@ const MapComponent = React.createClass({
     };
   },
 
-  onMapClick(e){
-    this.addLocation(e.clientX, e.clientY);
+  onMapTouchStart(e){
+    console.log('touch start')
+    const touch = e.touches[0];
+    this.startHoldTimer(touch.pageX, touch.pageY);
   },
+
+  onMapTouchEnd(e){
+    this.killHoldTimer();
+  },
+
+  onMapMouseDown(e){
+    this.startHoldTimer(e.clientX, e.clientY);
+  },
+
+  onMapMouseUp(e){
+    this.killHoldTimer();
+  },
+
+  killHoldTimer(){
+    if(this.holdTimer){
+      global.clearTimeout(this.holdTimer);
+    }
+    this.holdTimer = null;
+  },
+
+  startHoldTimer(x, y){
+    this.killHoldTimer();
+
+    this.holdTimer = global.setTimeout(() => {
+      this.killHoldTimer();
+      this.addLocation(x, y);
+    }, 500);
+  },
+
 
   updateLocation(id, x, y){
     // console.log('updateLocation (' + id + ', ' + x + ', ' + y + ')');
@@ -64,7 +95,12 @@ const MapComponent = React.createClass({
     global.testo = this;
     if(this.props.mapImage){
       return (
-        <div className="map" onClick={this.onMapClick} style={this.getSizing()}>
+        <div  className="map" 
+              onMouseDown={this.onMapMouseDown} 
+              onMouseUp={this.onMapMouseUp} 
+              onTouchStart={this.onMapTouchStart} 
+              onTouchEnd={this.onMapTouchEnd} 
+              style={this.getSizing()}>
           <div className="container-locations" style={this.getSizing()}>
             {this.props.locations.map((l, idx) => (
               <Location key={idx} id={idx} locationData={l} updateLocation={(id, x, y) => this.updateLocation(id, x, y)}/> 

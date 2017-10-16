@@ -26,19 +26,16 @@ const MainContainerComponent = React.createClass({
   },
 
   addListeners(){
-    const instance = this;
-
-    window.addEventListener('scroll', function(){
-      instance.checkScrollStuff();
-    })
+    // window.addEventListener('contextmenu', e => {
+    //   e.preventDefault();
+    //   this.openContextMenu(e);
+    // });
   },
 
-  //- TODO, reduce the number of times this gets called on each scroll
-  checkScrollStuff(){
-    if($(document).scrollTop() >= $(document).innerHeight() - $(window).innerHeight()){
-      console.log("YOU HIT THE BOTTOM");
-    }
+  openContextMenu(e){
+    console.log('open context menu at (' + e.clientX + ', ' + e.clientY + ')');
   },
+
 
   render() {
     console.log('Main.render()')
