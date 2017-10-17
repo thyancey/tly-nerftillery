@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as actions from 'store/actions';
 import {fromJS, Map, List} from 'immutable';
-
+import RoundTo from 'util/round-to';
 import staticData from 'data/staticData.js';
 
 import Header from 'components/header';
@@ -41,6 +41,15 @@ const MainContainerComponent = React.createClass({
     console.log('open context menu at (' + e.clientX + ', ' + e.clientY + ')');
   },
 
+  onZoom(direction){
+    const mapScale = this.props.mapScale;
+
+    if(direction === 'out'){
+      this.props.setMapScale(RoundTo(mapScale - .1, 2));
+    }else if(direction === 'in'){
+      this.props.setMapScale(RoundTo(mapScale + .1, 2));
+    }
+  },
 
   render() {
     console.log('Main.render()')
@@ -48,7 +57,7 @@ const MainContainerComponent = React.createClass({
     
     return (
       <div className="main">
-        <Header />
+        <Header scale={this.props.mapScale} onZoom={this.onZoom} />
         {this.props.curLocation && (
           <LocationSettings location={this.props.curLocation} onCloseLocation={this.onCloseLocation}/>
         )}
@@ -63,6 +72,7 @@ const MainContainerComponent = React.createClass({
 function mapStateToProps(state) {
   global.store = state;
   return {
+    mapScale: state.get('mapData').get('scale'),
     curLocation: state.get('curLocation')
   };
 }

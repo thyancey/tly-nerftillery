@@ -48,12 +48,13 @@
     }
   }
 
-
   .location-info{
     opacity: 0;
     transition: opacity .2s ease-in-out;
 
     position: absolute;
+    left:2rem;
+    top:2rem;
 
     z-index: 1000;
     background-color: white;
@@ -62,6 +63,19 @@
     box-shadow: @shadow-z2;
     min-width: 20rem;
     pointer-events: none;
+  }
+
+  &.open-left{
+    .location-info{
+      right:10rem;
+      left:auto;
+    }
+  }
+  &.open-up{
+    .location-info{
+      top:auto;
+      bottom:10rem;
+    }
   }
 
   .location-info-header{
@@ -81,6 +95,12 @@
   }
 
   &.open{
+    .target-bg{
+      transition: all .2s cubic-bezier(.65,1.64,.57,1.01);
+      transform:scale(1.25, 1.25);
+      transform-origin:50% 50%;
+      filter: brightness(150%);
+    }
     .location-info{
       opacity:1;
       transition: opacity .2s ease-in-out;

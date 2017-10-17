@@ -25,7 +25,7 @@ const MapComponent = React.createClass({
   },
 
   onMapMouseDown(e){
-    // console.log('onMapMouseDown');
+    console.log('onMapMouseDown');
     this.startHoldTimer(e.clientX, e.clientY);
   },
 

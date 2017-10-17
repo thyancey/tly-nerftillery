@@ -130,7 +130,7 @@ function setMapScale(state, action){
   const locations = refreshLocations(newMapData, state.get('locations'));
 
   return state.withMutations((ctx) => {
-    ctx.set('mapData', newData).set('locations', locations);
+    ctx.set('mapData', newMapData).set('locations', locations);
   });
 }
 

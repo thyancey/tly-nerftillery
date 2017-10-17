@@ -9,7 +9,13 @@ export default Location = React.createClass({
     };
   },
 
+  onTargetDown(e){
+    console.log('onTargetDown')
+    e.stopPropagation();
+  },
+
   onTouchStart(e){
+    console.log('percX: ', this.props.locationData.get('percX'));
     // console.log('onTouchStart');
     this.setState({ isOpen: !this.state.isOpen });
     e.stopPropagation();
@@ -66,6 +72,16 @@ export default Location = React.createClass({
     let className = 'target';
     if(this.state.isOpen) className += ' open';
     if(this.props.locationData.get('type')) className += ' type-' + this.props.locationData.get('type');
+    const openLeft = this.props.locationData.get('percX') > .5;
+
+    console.log('percX: ', this.props.locationData.get('percX'));
+    if(openLeft) className += ' open-left';
+
+    const openUp = this.props.locationData.get('percY') > .5;
+    console.log('percY: ', this.props.locationData.get('percY'));
+    if(openUp) className += ' open-up';
+
+
 
     return (
       <div  className={className} 
@@ -73,7 +89,7 @@ export default Location = React.createClass({
             onTouchStart={this.onTouchStart} 
             onMouseEnter={this.mouseEnter} 
             onMouseLeave={this.mouseLeave}
-            style={{left:this.props.locationData.get('x'), top:this.props.locationData.get('y')}} >
+            style={{ left:this.props.locationData.get('x'), top:this.props.locationData.get('y') }} >
         {this.state.isOpen && (
           <div className="location-info">
             <div className="location-info-header">
@@ -86,7 +102,7 @@ export default Location = React.createClass({
             {this.renderCalibration(this.props.locationData.get('calibration'))}
           </div>
         )}
-        <div className="target-bg"/>
+        <div className="target-bg" />
       </div>
     );
   }

@@ -8,7 +8,7 @@ export default {
       data:{
         origWidth: 554,
         origHeight: 736,
-        scale: 3
+        scale: 1
       },
       locations:[
         {
