@@ -14,7 +14,7 @@ const MapComponent = React.createClass({
   },
 
   onMapTouchStart(e){
-    console.log('onMapTouchStart');
+    // console.log('onMapTouchStart');
     const touch = e.touches[0];
     this.startHoldTimer(touch.pageX, touch.pageY);
   },
@@ -25,7 +25,7 @@ const MapComponent = React.createClass({
   },
 
   onMapMouseDown(e){
-    console.log('onMapMouseDown');
+    // console.log('onMapMouseDown');
     this.startHoldTimer(e.clientX, e.clientY);
   },
 
@@ -49,12 +49,12 @@ const MapComponent = React.createClass({
     this.holdTimer = global.setTimeout(() => {
       this.killHoldTimer();
       this.addLocation(x, y);
-    }, 500);
+    }, 2000);
   },
 
 
   onLocationSettings(id){
-    // console.log('kill hold timer');
+    console.log('onLocationSettings');
     this.killHoldTimer();
     this.props.loadLocationSettings(id);
   },
@@ -103,6 +103,10 @@ const MapComponent = React.createClass({
     }
   },
 
+  onFireCommand(calibrationData){
+    global.alert('FIRE ' + JSON.stringify(calibrationData));
+  },
+
   render() {
     global.testo = this;
     if(this.props.mapImage){
@@ -115,7 +119,11 @@ const MapComponent = React.createClass({
               style={this.getSizing()}>
           <div className="container-locations" style={this.getSizing()}>
             {this.props.locations.map((l, idx) => (
-              <Location key={idx} id={idx} locationData={l} updateLocation={(id, x, y) => this.updateLocation(id, x, y)} onLocationSettings={this.onLocationSettings} /> 
+              <Location key={idx} id={idx} 
+                        locationData={l} 
+                        updateLocation={(id, x, y) => this.updateLocation(id, x, y)} 
+                        onLocationSettings={this.onLocationSettings}
+                        fireCommand={this.onFireCommand} /> 
             ))}
           </div>
           <div className="map-image" style={{backgroundImage: 'url("' + this.props.mapImage + '")'}}/>

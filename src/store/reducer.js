@@ -154,7 +154,13 @@ function updateLocation(state, action){
 }
 
 function loadLocationSettings(state, action){
-  const location = getLocationWithId(state.get('locations'), action.payload);
+  let location;
+  if(action.payload === null){
+    location = null;
+  }
+  else{
+    location = getLocationWithId(state.get('locations'), action.payload);
+  }
 
   return state.withMutations((ctx) => {
     ctx.set('curLocation', location);

@@ -1,5 +1,5 @@
 export default {
-  defaultId: 'pirate',
+  defaultId: 'office',
   maps:[
     {
       id: 'pirate',
@@ -25,8 +25,7 @@ export default {
           type: 'turret',
           turretId: 'turret2',
           percX: 0.761,
-          percY: 0.8449,
-          calibration: {}
+          percY: 0.8449
         },
         {
           title: 'X Marks the Spot',
@@ -87,8 +86,7 @@ export default {
           type: 'turret',
           turretId: 'turret1',
           percX: 0.5,
-          percY: 0.56,
-          calibration: {}
+          percY: 0.56
         },
         {
           title: 'conference room 1',
@@ -97,7 +95,7 @@ export default {
           percY: 0.63,
           calibration: {
             turret1: {
-              rotX:-45,
+              rotX:-105,
               rotY:5
             }
           }
@@ -107,28 +105,42 @@ export default {
           type: 'location',
           percX: 0.25,
           percY: 0.5,
-          calibration: {}
+          calibration: {
+            turret1: {
+              rotX:-80,
+              rotY:5
+            }
+          }
         },
         {
           title: 'conference room 3',
           type: 'location',
           percX: 0.26,
           percY: 0.38,
-          calibration: {}
+          calibration: {
+            turret1: {
+              rotX:-45,
+              rotY:15
+            }
+          }
         },
         {
           title: 'sink',
           type: 'location',
           percX: 0.3,
-          percY: 0.17,
-          calibration: {}
+          percY: 0.17
         },
         {
           title: 'copier',
           type: 'location',
           percX: 0.78,
           percY: 0.27,
-          calibration: {}
+          calibration: {
+            turret1: {
+              rotX:35,
+              rotY:25
+            }
+          }
         }
       ]
     }
