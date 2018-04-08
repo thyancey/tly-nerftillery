@@ -7,7 +7,7 @@ import staticData from 'data/staticData.js';
 
 import Header from 'components/header';
 import MapController from 'components/map-controller';
-import LocationSettings from 'components/location-settings';
+import TurretSettings from 'components/location-settings/turret';
 
 require('./style.less');
 
@@ -51,6 +51,12 @@ const MainContainerComponent = React.createClass({
     }
   },
 
+  getMarker(curLocation){
+    if(curLocation && curLocation.get('type') === 'turret'){
+      return  (<TurretSettings location={curLocation} onCloseLocation={this.onCloseLocation}/>)
+    }
+  },
+
   render() {
     console.log('Main.render()')
     global.staticData = staticData;
@@ -58,9 +64,7 @@ const MainContainerComponent = React.createClass({
     return (
       <div className="main">
         <Header scale={this.props.mapScale} onZoom={this.onZoom} />
-        {this.props.curLocation && (
-          <LocationSettings location={this.props.curLocation} onCloseLocation={this.onCloseLocation}/>
-        )}
+        { this.getMarker(this.props.curLocation) }
         <div className="container-map">
           <MapController />
         </div>

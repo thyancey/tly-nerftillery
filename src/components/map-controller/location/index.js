@@ -35,40 +35,15 @@ export default Location = React.createClass({
   onSettings(e, id){
     console.log('onSetting')
     e.stopPropagation();
-    this.setState({ isOpen:false });
+    if(this.props.locationData.get('type') === 'turret'){
+      this.setState({ isOpen:false });
+    }else{
+      console.log('NOPE!')
+    }
 
     this.props.onLocationSettings(id);
   },
 
-  renderCalibration(calibrationData){
-    if(calibrationData){
-      const turretMarkup = [];
-      calibrationData.keySeq().forEach((turretId, idx) => {
-        turretMarkup.push(
-          <div key={idx}>
-            <p>{turretId}</p>
-            <ul>
-              <li>{'rotX: ' + calibrationData.get(turretId).get('rotX') + '°'}</li>
-              <li>{'rotY: ' + calibrationData.get(turretId).get('rotY') + '°'}</li>
-            </ul>
-          </div>
-        );
-      });
-
-      if(turretMarkup.length > 0){
-        return(
-          <div className="calibration-group">
-            <h4>{'Calibration:'}</h4>
-            {turretMarkup}
-          </div>
-        );
-      }else{
-        return null;
-      }
-    }else{
-      return null;
-    }
-  },
 
   render() {
     let className = 'target';
@@ -90,6 +65,7 @@ export default Location = React.createClass({
                         calibrationData={this.props.locationData.get('calibration')}
                         openLeft={this.props.locationData.get('percX') > .5}
                         openUp={this.props.locationData.get('percY') > .5}
+                        type={this.props.locationData.get('type')}
                         onSettings={this.onSettings} 
                         onButtonFire={this.props.fireCommand} />
         )}

@@ -7,23 +7,27 @@ export default Location = React.createClass({
   renderCalibration(calibrationData){
     if(calibrationData){
       const turretMarkup = [];
-      calibrationData.keySeq().forEach((turretId, idx) => {
+        
+      calibrationData.map((calObj, i) => {
         turretMarkup.push(
-          <div key={idx}>
-            <p>{turretId}</p>
-            <ul>
-              <li>{'rotX: ' + calibrationData.get(turretId).get('rotX') + '°'}</li>
-              <li>{'rotY: ' + calibrationData.get(turretId).get('rotY') + '°'}</li>
-            </ul>
-          </div>
+          <li key={i}>
+            <div className="location-target-calibration">
+              <h4>{calObj.get('id')}</h4>
+              <p>{`rotX: ${calObj.get('rotX')}°`}</p>
+              <p>{`rotY: ${calObj.get('rotY')}°`}</p>
+              <button></button>
+            </div>
+          </li>
         );
       });
 
       if(turretMarkup.length > 0){
-        return(
+        return (
           <div className="calibration-group">
             <h4>{'Calibration:'}</h4>
-            {turretMarkup}
+            <ul>
+              {turretMarkup}
+            </ul>
           </div>
         );
       }else{
@@ -58,9 +62,11 @@ export default Location = React.createClass({
       <div className={className}>
         <div className="location-info-header">
           <h3 className="left">{this.props.title}</h3>
-          <div  className="right" 
-                onMouseDown={e => this.props.onSettings(e, this.props.id)} 
-                onTouchStart={e => this.props.onSettings(e, this.props.id)}/>
+          {this.props.type === 'turret' && (
+            <div  className="right" 
+                  onMouseDown={e => this.props.onSettings(e, this.props.id)} 
+                  onTouchStart={e => this.props.onSettings(e, this.props.id)}/>
+          )}
         </div>
         {this.props.description && (<p>{this.props.description}</p>)}
         {this.renderCalibration(this.props.calibrationData)}

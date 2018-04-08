@@ -76,6 +76,7 @@ function getMapData(state, action){
   });
 }
 
+
 //- not used ATM
 //- expects a List of location data Maps (should have title, percX and percY)
 function getLocations(state, action){

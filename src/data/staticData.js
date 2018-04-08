@@ -1,5 +1,5 @@
 export default {
-  defaultId: 'office',
+  defaultId: 'pirate',
   maps:[
     {
       id: 'pirate',
@@ -30,44 +30,48 @@ export default {
         {
           title: 'X Marks the Spot',
           description: 'This location can be reached by both turrets',
-          type: 'location',
+          type: 'target',
           percX: 0.45,
           percY: 0.53,
-          calibration: {
-            turret1: {
+          calibration: [
+            {
+              id: 'turret1',
               rotX:20,
               rotY:30
             },
-            turret2: {
+            {
+              id: 'turret2',
               rotX:45,
               rotY:60
             }
-          }
+          ]
         },
         {
           title: 'SKULL ROCK',
           description: 'Easy to hit from turret1',
-          type: 'location',
+          type: 'target',
           percX: 0.42,
           percY: 0.21,
-          calibration: {
-            turret1: {
+          calibration: [
+            {
+              id: 'turret1',
               rotX:50,
               rotY:10
             }
-          }
+          ]
         },
         {
           title: 'Pirate shit',
-          type: 'location',
+          type: 'target',
           percX: 0.7971,
           percY: 0.5862,
-          calibration: {
-            turret2: {
+          calibration: [
+            {
+              id: 'turret2',
               rotX:50,
               rotY:10
             }
-          }
+          ]
         }
       ]
     },
@@ -90,57 +94,61 @@ export default {
         },
         {
           title: 'conference room 1',
-          type: 'location',
+          type: 'target',
           percX: 0.26,
           percY: 0.63,
-          calibration: {
-            turret1: {
+          calibration: [
+            {
+              id: 'turret1',
               rotX:-105,
               rotY:5
             }
-          }
+          ]
         },
         {
           title: 'conference room 2',
-          type: 'location',
+          type: 'target',
           percX: 0.25,
           percY: 0.5,
-          calibration: {
-            turret1: {
+          calibration: [
+            {
+              id: 'turret1',
               rotX:-80,
               rotY:5
             }
-          }
+          ]
         },
         {
           title: 'conference room 3',
-          type: 'location',
+          type: 'target',
           percX: 0.26,
           percY: 0.38,
-          calibration: {
-            turret1: {
+          calibration: [
+            {
+              id: 'turret1',
               rotX:-45,
               rotY:15
             }
-          }
+          ]
         },
         {
           title: 'sink',
-          type: 'location',
+          type: 'target',
           percX: 0.3,
           percY: 0.17
         },
         {
           title: 'copier',
-          type: 'location',
+          type: 'target',
           percX: 0.78,
           percY: 0.27,
-          calibration: {
-            turret1: {
+          calibration: [
+            {
+              id: 'turret1',
               rotX:35,
               rotY:25
             }
-          }
+          ]
         }
       ]
     }

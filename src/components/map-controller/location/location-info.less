@@ -1,6 +1,24 @@
 @import "~themes/variables.less";
 
 
+    .location-target-calibration{
+      margin:1rem;
+      background-color:@color-blue;
+      border-radius: @border-radius-medium;
+      padding: .5rem;
+      position:relative;
+
+      button{
+        position:absolute;
+        top:1rem;
+        right:1rem;
+        width:2rem;
+        height:2rem;
+        background-size:contain;
+        background-image: url('~images/settings-gear.png');
+      }
+    }
+
 .target{
   &.type-turret{
     .location-info{
@@ -73,22 +91,4 @@
     }
   }
 
-  .calibration-group{
-    background-color:@color-blue;
-    border-radius: @border-radius-medium;
-    padding: 1rem;
-    margin-top:1rem;
-
-    >div{
-      margin-top:.5rem;
-
-      ul{
-        font-size:1.2rem;
-        margin:0;
-        list-style:none;
-        padding-left:1rem;
-      }
-    }
-
-  }
 }

@@ -7,7 +7,7 @@ export default React.createClass({
   render() {
     
     return (
-      <div id="location-settings">
+      <div id="location-settings" className="location-turret">
         <div className="header">
           <h2 className="left">{'Edit Location'}</h2>
           <div className="right" onClick={this.props.onCloseLocation}/> 
