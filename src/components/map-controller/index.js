@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as actions from 'store/actions';
 
-import Location from './location';
+import Location from '../location';
 
 require('./style.less');
 
@@ -13,49 +13,15 @@ const MapComponent = React.createClass({
     };
   },
 
-  onMapTouchStart(e){
-    // console.log('onMapTouchStart');
-    const touch = e.touches[0];
-    this.startHoldTimer(touch.pageX, touch.pageY);
+  onContextMenu(e){
+    console.log('contextMenu',e);
+    e.preventDefault();
+    e.stopPropagation();
+    this.addLocation(e.clientX, e.clientY);
   },
-
-  onMapTouchEnd(e){
-    // console.log('onMapTouchEnd');
-    this.killHoldTimer();
-  },
-
-  onMapMouseDown(e){
-    // console.log('onMapMouseDown');
-    this.startHoldTimer(e.clientX, e.clientY);
-  },
-
-  onMapMouseUp(e){
-    // console.log('onMapMouseUp');
-    this.killHoldTimer();
-  },
-
-  killHoldTimer(){
-    // console.log('killHoldTimer');
-    if(this.holdTimer){
-      global.clearTimeout(this.holdTimer);
-    }
-    this.holdTimer = null;
-  },
-
-  startHoldTimer(x, y){
-    // console.log('startHoldTimer');
-    this.killHoldTimer();
-
-    this.holdTimer = global.setTimeout(() => {
-      this.killHoldTimer();
-      this.addLocation(x, y);
-    }, 2000);
-  },
-
 
   onLocationSettings(id){
     console.log('onLocationSettings');
-    this.killHoldTimer();
     this.props.loadLocationSettings(id);
   },
 
@@ -104,7 +70,8 @@ const MapComponent = React.createClass({
   },
 
   onFireCommand(calibrationData){
-    global.alert('FIRE ' + JSON.stringify(calibrationData));
+    console.log(`FIRE: ${JSON.stringify(calibrationData)}`);
+    // global.alert('FIRE ' + JSON.stringify(calibrationData));
   },
 
   render() {
@@ -112,10 +79,7 @@ const MapComponent = React.createClass({
     if(this.props.mapImage){
       return (
         <div  className="map" 
-              onMouseDown={this.onMapMouseDown} 
-              onMouseUp={this.onMapMouseUp} 
-              onTouchStart={this.onMapTouchStart} 
-              onTouchEnd={this.onMapTouchEnd} 
+              onContextMenu={this.onContextMenu}
               style={this.getSizing()}>
           <div className="container-locations" style={this.getSizing()}>
             {this.props.locations.map((l, idx) => (

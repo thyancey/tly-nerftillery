@@ -1,21 +1,20 @@
 import React from 'react';
 
-require('./location-info.less');
+require('./style.less');
 
-export default Location = React.createClass({
+export default React.createClass({
 
-  renderCalibration(calibrationData){
+  listConnectedTurrets(calibrationData){
     if(calibrationData){
       const turretMarkup = [];
         
       calibrationData.map((calObj, i) => {
         turretMarkup.push(
           <li key={i}>
-            <div className="location-target-calibration">
+            <div className="connected-turrets">
               <h4>{calObj.get('id')}</h4>
               <p>{`rotX: ${calObj.get('rotX')}°`}</p>
               <p>{`rotY: ${calObj.get('rotY')}°`}</p>
-              <button></button>
             </div>
           </li>
         );
@@ -23,8 +22,8 @@ export default Location = React.createClass({
 
       if(turretMarkup.length > 0){
         return (
-          <div className="calibration-group">
-            <h4>{'Calibration:'}</h4>
+          <div>
+            <h4>{'Connected Turrets:'}</h4>
             <ul>
               {turretMarkup}
             </ul>
@@ -39,28 +38,19 @@ export default Location = React.createClass({
   },
 
   onButtonFire(e){
-    console.log('onButtonFIre!')
-    e.stopPropagation();
+    console.log(`onButtonFire! ${e.type}`);
 
     this.props.onButtonFire(this.props.calibrationData);
   },
 
-  renderFireButton(){
-    return (
-      <div className="button-container">
-        <button onTouchStart={e => this.onButtonFire(e)} onMouseDown={e => this.onButtonFire(e)}>{'FIRE'}</button>
-      </div>
-    );
-  },
-
   render() {
-    let className = "location-info";
+    let className = "location-tooltip";
     if(this.props.openLeft) className += ' open-left';
     if(this.props.openUp) className += ' open-up';
 
     return (
       <div className={className}>
-        <div className="location-info-header">
+        <div className="location-tooltip-header">
           <h3 className="left">{this.props.title}</h3>
           {this.props.type === 'turret' && (
             <div  className="right" 
@@ -69,8 +59,12 @@ export default Location = React.createClass({
           )}
         </div>
         {this.props.description && (<p>{this.props.description}</p>)}
-        {this.renderCalibration(this.props.calibrationData)}
-        {this.props.calibrationData && this.renderFireButton()}
+        {this.listConnectedTurrets(this.props.calibrationData)}
+        {this.props.calibrationData && (
+          <div className="button-container">
+            <button onTouchStart={e => this.onButtonFire(e)} onMouseDown={e => this.onButtonFire(e)}>{'FIRE'}</button>
+          </div>
+        )}
       </div>
     );
   }
