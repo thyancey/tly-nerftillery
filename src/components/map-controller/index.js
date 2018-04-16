@@ -14,10 +14,15 @@ const MapComponent = React.createClass({
   },
 
   onContextMenu(e){
-    console.log('contextMenu',e);
-    e.preventDefault();
-    e.stopPropagation();
-    this.addLocation(e.clientX, e.clientY);
+  /*
+    //- TODO, no need to add locations for MVP
+    if(!this.props.debugMode){
+      console.log('contextMenu',e);
+      e.preventDefault();
+      e.stopPropagation();
+      this.addLocation(e.clientX, e.clientY);
+    }
+  */
   },
 
   onLocationSettings(id){
@@ -39,7 +44,7 @@ const MapComponent = React.createClass({
   },
 
   addLocation(x, y){
-    console.log('click (' + x + ', ' + y + ')')
+    // console.log('click (' + x + ', ' + y + ')');
     const offsetX = $('.container-map').scrollLeft();
     const offsetY = 0 - this.state.headerHeight + $('.container-map').scrollTop();
 
@@ -87,6 +92,7 @@ const MapComponent = React.createClass({
                         locationData={l} 
                         updateLocation={(id, x, y) => this.updateLocation(id, x, y)} 
                         onLocationSettings={this.onLocationSettings}
+                        debugMode={this.props.debugMode}
                         fireCommand={this.onFireCommand} /> 
             ))}
           </div>
@@ -111,7 +117,8 @@ function mapStateToProps(state) {
     mapWidth: state.get('mapData').get('width'),
     mapHeight: state.get('mapData').get('height'),
     mapImage: state.get('mapData').get('image'),
-    mapTitle: state.get('mapData').get('title')
+    mapTitle: state.get('mapData').get('title'),
+    debugMode: state.get('debugMode')
   };
 }
 

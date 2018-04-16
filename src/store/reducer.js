@@ -5,11 +5,15 @@ import roundTo from 'util/round-to';
 
 const SNAP_SENSITIVITY = 4; //- how many decimals for x/y percentages to keep
 
-export default function(state = Map({ title: '' }), action) {
+export default function(state = Map({ title: '', debugMode: false }), action) {
   switch (action.type) {
     case 'SET_STATE':
       console.log('reducer.SET_STATE');
       return state.merge(action.state);
+
+    case 'SET_DEBUG_MODE':
+      console.log('reducer.SET_DEBUG_MODE:', action.payload);
+      return state.merge({ debugMode: action.payload });
 
     case 'GET_MAP_DATA':
       console.log('reducer.GET_MAP_DATA');

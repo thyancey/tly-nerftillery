@@ -4,6 +4,13 @@ export function setState(state) {
     state
   };
 }
+export function setDebugMode(isDebugOn) {
+  return {
+    type: 'SET_DEBUG_MODE',
+    payload: isDebugOn
+  };
+}
+
 
 export function setTitle(payload) {
   return {

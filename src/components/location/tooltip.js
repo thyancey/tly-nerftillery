@@ -62,7 +62,9 @@ export default React.createClass({
         {this.listConnectedTurrets(this.props.calibrationData)}
         {this.props.calibrationData && (
           <div className="button-container">
-            <button onTouchStart={e => this.onButtonFire(e)} onMouseDown={e => this.onButtonFire(e)}>{'FIRE'}</button>
+            <button onTouchStart={e => this.onButtonFire(e)} 
+                    onMouseDown={e => this.onButtonFire(e)}>{'FIRE'}
+            </button>
           </div>
         )}
       </div>

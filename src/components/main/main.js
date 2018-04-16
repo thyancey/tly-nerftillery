@@ -7,7 +7,8 @@ import staticData from 'data/staticData.js';
 
 import Header from 'components/header';
 import MapController from 'components/map-controller';
-import TurretSettings from 'components/location-settings/turret';
+import LocationSettings from 'components/location-settings';
+import BackgroundBlocker from 'components/misc/background-blocker';
 
 require('./style.less');
 
@@ -17,6 +18,10 @@ const MainContainerComponent = React.createClass({
     this.addListeners();
 
     this.getMapData();
+  },
+
+  componentWillUnmount(){
+    this.removeListeners();
   },
 
   getMapData(){
@@ -31,14 +36,25 @@ const MainContainerComponent = React.createClass({
   },
 
   addListeners(){
-    // window.addEventListener('contextmenu', e => {
-    //   e.preventDefault();
-    //   this.openContextMenu(e);
-    // });
+    document.addEventListener('keydown', this.onDocumentKeyDown);
   },
 
-  openContextMenu(e){
-    console.log('open context menu at (' + e.clientX + ', ' + e.clientY + ')');
+  removeListeners(){
+    document.removeEventListener('keydown', this.onDocumentKeyDown);
+  },
+
+  onDocumentKeyDown(e){
+    if(e.keyCode === 192){
+      this.toggleDebugMode();
+    }
+  },
+
+  toggleDebugMode(forceMode){
+    if(forceMode !== undefined){
+      this.props.setDebugMode(forceMode);
+    }else{
+      this.props.setDebugMode(!this.props.debugMode);
+    }
   },
 
   onZoom(direction){
@@ -51,9 +67,14 @@ const MainContainerComponent = React.createClass({
     }
   },
 
-  getMarker(curLocation){
+  getLocationSettings(curLocation){
     if(curLocation && curLocation.get('type') === 'turret'){
-      return  (<TurretSettings location={curLocation} onCloseLocation={this.onCloseLocation}/>)
+      return  (
+        <div>
+          <LocationSettings location={curLocation} onCloseLocation={this.onCloseLocation}/>
+          <BackgroundBlocker />
+        </div>
+      )
     }
   },
 
@@ -64,7 +85,7 @@ const MainContainerComponent = React.createClass({
     return (
       <div className="main">
         <Header scale={this.props.mapScale} onZoom={this.onZoom} />
-        { this.getMarker(this.props.curLocation) }
+        { this.getLocationSettings(this.props.curLocation) }
         <div className="container-map">
           <MapController />
         </div>
@@ -77,7 +98,8 @@ function mapStateToProps(state) {
   global.store = state;
   return {
     mapScale: state.get('mapData').get('scale'),
-    curLocation: state.get('curLocation')
+    curLocation: state.get('curLocation'),
+    debugMode: state.get('debugMode')
   };
 }
 
