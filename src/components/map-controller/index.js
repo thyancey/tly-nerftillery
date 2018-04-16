@@ -90,13 +90,9 @@ const MapComponent = React.createClass({
     return coreValues;
   },
 
-  onFireCommand(calibrationData){
-    console.log(`FIRE: ${JSON.stringify(calibrationData)}`);
-    // global.alert('FIRE ' + JSON.stringify(calibrationData));
-  },
-
   render() {
-    global.testo = this;
+    global.testMapController = this;
+    
     if(this.props.mapImage){
       return (
         <div  className="map" 
@@ -109,7 +105,7 @@ const MapComponent = React.createClass({
                         updateLocation={(id, x, y) => this.updateLocation(id, x, y)} 
                         onLocationSettings={this.onLocationSettings}
                         debugMode={this.props.debugMode}
-                        fireCommand={this.onFireCommand} /> 
+                        fireCommand={this.props.onFireCommand} /> 
             ))}
           </div>
           <div className="map-image" style={{backgroundImage: 'url("' + this.props.mapImage + '")'}}/>

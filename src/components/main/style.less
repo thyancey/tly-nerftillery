@@ -16,4 +16,26 @@
   background-color:white;
 
   overflow:auto;
+  text-align:center;
+}
+
+#debug-container{
+  position:absolute;
+  z-index:1;
+  top:0;
+  left:0;
+  right:0;
+
+  .debug-container-child{
+    padding: 1rem 2rem;
+
+    border-radius:2rem;
+    border:1px solid white;
+    background-color:black;
+    color:white;
+
+    h3{
+      white-space: pre-line;
+    }
+  }
 }
