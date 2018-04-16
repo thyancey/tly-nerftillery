@@ -66,12 +66,28 @@ const MapComponent = React.createClass({
     this.props.setMapScale(scaleValue);
   },
 
-  getSizing(multiplier){
+  getSizing(multiplier, isOuterMap){
     multiplier = multiplier || 1;
-    return {
+
+    const coreValues = {
       width: this.props.mapWidth * multiplier,
-      height: this.props.mapHeight * multiplier
+      height: this.props.mapHeight * multiplier,
+      left:0,
+      top:0
     }
+
+    if(isOuterMap){
+      const mapDiv = document.querySelector('.container-map');
+
+      if(coreValues.width < mapDiv.offsetWidth){
+        coreValues.left = (mapDiv.offsetWidth - coreValues.width) / 2;
+      }
+      if(coreValues.height < mapDiv.offsetHeight){
+        coreValues.top = (mapDiv.offsetHeight - coreValues.height) / 2;
+      }
+    }
+
+    return coreValues;
   },
 
   onFireCommand(calibrationData){
@@ -85,7 +101,7 @@ const MapComponent = React.createClass({
       return (
         <div  className="map" 
               onContextMenu={this.onContextMenu}
-              style={this.getSizing()}>
+              style={this.getSizing(null, true)}>
           <div className="container-locations" style={this.getSizing()}>
             {this.props.locations.map((l, idx) => (
               <Location key={idx} id={idx} 
