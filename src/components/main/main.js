@@ -78,13 +78,33 @@ const MainContainerComponent = React.createClass({
     }
   },
 
+  changeMap(mapId){
+    this.props.getMapData({
+      allMapData: fromJS(staticData.maps),
+      defaultId: mapId
+    });
+  },
+
   render() {
     console.log('Main.render()')
     global.staticData = staticData;
-    
+
+    let headerMapData = null;
+
+    if(this.props.allMapData){
+      const maps = this.props.allMapData.map((m, idx) => (
+        m.get('id')
+      ));
+
+      headerMapData = {
+        current: this.props.mapData && this.props.mapData.get('id'),
+        maps: maps
+      }
+    }
+
     return (
       <div className="main">
-        <Header scale={this.props.mapScale} onZoom={this.onZoom} />
+        <Header scale={this.props.mapScale} onZoom={this.onZoom} headerMapData={headerMapData} changeMap={this.changeMap}/>
         { this.getLocationSettings(this.props.curLocation) }
         <div className="container-map">
           <MapController />
@@ -98,6 +118,7 @@ function mapStateToProps(state) {
   global.store = state;
   return {
     mapScale: state.get('mapData').get('scale'),
+    allMapData: state.get('allMapData'),
     curLocation: state.get('curLocation'),
     debugMode: state.get('debugMode')
   };
